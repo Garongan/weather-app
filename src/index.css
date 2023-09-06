@@ -1,0 +1,28 @@
+@font-face {
+  font-family: "Nunito";
+  src: url("./assets/font/Nunito-VariableFont_wght.ttf"),
+    url("./assets/font/Nunito-Italic-VariableFont_wght.ttf"),
+    url("./assets/font/static/Nunito-Bold.ttf"),
+    url("./assets/font/static/Nunito-Italic.ttf"),
+    url("./assets/font/static/Nunito-Regular.ttf"),
+    url("./assets/font/static/Nunito-Medium.ttf"),
+    url("./assets/font/static/Nunito-Light.ttf");
+}
+
+:root {
+  font-family: Nunito, sans-serif;
+  line-height: 1.5;
+  font-synthesis: none;
+  color: white;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  -webkit-text-size-adjust: 100%;
+  background: linear-gradient(0deg, #19c3fb 10%, #1d71f2 100%);
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+body {
+  margin: 0;
+}
