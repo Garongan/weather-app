@@ -20,6 +20,7 @@
 }
 
 .weather-today-wrapper {
+  margin-top: 5vh;
   padding-top: 12rem;
   display: flex;
   justify-content: end;

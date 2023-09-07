@@ -1,10 +1,16 @@
 import { useEffect } from "react";
 import "./App.css";
-import { CurrentWeather, GetLocByIp } from "./components/WeatherApi";
+import {
+  CurrentWeatherByGeo,
+  CurrentWeatherByIP,
+  GetLocByIp,
+} from "./components/WeatherApi";
 import { useState } from "react";
 import UnixTimestampToHumanReadable from "./components/time";
 
 function App() {
+  const [lat, setLat] = useState();
+  const [lon, setLon] = useState();
   const [iconCode, setIconCode] = useState();
   const [weatherDesc, setWeaterDesc] = useState();
   const [city, setCity] = useState();
@@ -18,26 +24,54 @@ function App() {
   const [windDirection, setWindDirection] = useState();
 
   useEffect(() => {
-    GetLocByIp().then((results) => {
-      CurrentWeather(results)
-        .then((results) => {
-          setIconCode(results.data.weather[0].icon);
-          setWeaterDesc(results.data.weather[0].description);
-          setCity(results.data.name);
-          setTemp(results.data.main.temp);
-          setDate(results.data.dt);
-          setFeelsLike(results.data.main.feels_like);
-          setMaxTemp(results.data.main.temp_max);
-          setMinTemp(results.data.main.temp_min);
-          setHumidity(results.data.main.humidity);
-          setWindSpeed(results.data.wind.speed);
-          setWindDirection(results.data.wind.deg);
-        })
-        .catch((error) => {
-          console.error(error);
+    navigator.geolocation.getCurrentPosition(
+      (pos) => {
+        const crd = pos.coords;
+        setLat(crd.latitude);
+        setLon(crd.longitude);
+        CurrentWeatherByGeo(lat, lon)
+          .then((results) => {
+            setIconCode(results.data.weather[0].icon);
+            setWeaterDesc(results.data.weather[0].description);
+            setCity(results.data.name);
+            setTemp(results.data.main.temp);
+            setDate(results.data.dt);
+            setFeelsLike(results.data.main.feels_like);
+            setMaxTemp(results.data.main.temp_max);
+            setMinTemp(results.data.main.temp_min);
+            setHumidity(results.data.main.humidity);
+            setWindSpeed(results.data.wind.speed);
+            setWindDirection(results.data.wind.deg);
+          })
+          .catch((error) => {
+            console.error(error);
+          });
+      },
+      (err) => {
+        console.warn(`ERROR(${err.code}): ${err.message}`);
+        GetLocByIp().then((results) => {
+          CurrentWeatherByIP(results)
+            .then((results) => {
+              setIconCode(results.data.weather[0].icon);
+              setWeaterDesc(results.data.weather[0].description);
+              setCity(results.data.name);
+              setTemp(results.data.main.temp);
+              setDate(results.data.dt);
+              setFeelsLike(results.data.main.feels_like);
+              setMaxTemp(results.data.main.temp_max);
+              setMinTemp(results.data.main.temp_min);
+              setHumidity(results.data.main.humidity);
+              setWindSpeed(results.data.wind.speed);
+              setWindDirection(results.data.wind.deg);
+            })
+            .catch((error) => {
+              console.error(error);
+            });
         });
-    });
-  }, []);
+      },
+      { enableHighAccuracy: true, timeout: 5000, maximumAge: 0 }
+    );
+  }, [lat, lon]);
 
   return (
     <div className="app">
@@ -47,7 +81,7 @@ function App() {
         alt="Main Weather"
       />
       <div className="weather-head-wrapper">
-        <div className="city-name">{city}</div>
+        <div className="city-name">{lat ? 'Geo Loc' : 'IP Loc'} {city}</div>
         <div className="weather-desc">{weatherDesc}</div>
         <div className="weather-degree">{temp}&deg;C</div>
       </div>
@@ -72,7 +106,8 @@ function App() {
         </div>
       </div>
       <div className="footer">
-        Create by Alvindo Tri Jatmiko using Openweather and IPinfo API &copy;2023
+        Create by Alvindo Tri Jatmiko using Openweather and IPinfo API
+        &copy;2023
       </div>
     </div>
   );

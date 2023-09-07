@@ -15,7 +15,14 @@ export const GetLocByIp = async () => {
   return city_name.data.city;
 };
 
-export const CurrentWeather = async (city_name) => {
+export const CurrentWeatherByGeo = async (lat, lon) => {
+    const CurrentWeather = await axios.get(
+      `${baseUrlFromOpenWeather}?lat=${lat}&lon=${lon}&lang=id&appid=${apiKeyFromOpenWeather}&units=metric`
+    );
+    return CurrentWeather;
+};
+
+export const CurrentWeatherByIP = async (city_name) => {
   const CurrentWeather = await axios.get(
     `${baseUrlFromOpenWeather}?q=${city_name}&lang=id&appid=${apiKeyFromOpenWeather}&units=metric`
   );
