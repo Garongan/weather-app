@@ -21,10 +21,3 @@ export const CurrentWeatherByGeo = async (lat, lon) => {
     );
     return CurrentWeather;
 };
-
-export const CurrentWeatherByIP = async (city_name) => {
-  const CurrentWeather = await axios.get(
-    `${baseUrlFromOpenWeather}?q=${city_name}&lang=id&appid=${apiKeyFromOpenWeather}&units=metric`
-  );
-  return CurrentWeather;
-};
