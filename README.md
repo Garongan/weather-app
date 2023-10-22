@@ -11,7 +11,9 @@ This web was build using openWeather api and Ipinfo IP
 
 # Screenshot
 
-![Weather APp Screenshot](screenshot.png)
+![Weather APp Screenshot](react-weather-app-dekstop.webp)
+![Weather APp Screenshot](react-weather-app-tablet.webp)
+![Weather APp Screenshot](react-weather-app-mobile.webp)
 
 # Demo
 
