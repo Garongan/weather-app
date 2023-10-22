@@ -17,4 +17,4 @@ This web was build using openWeather api and Ipinfo IP
 
 # Demo
 
-You can try out Weather App by visiting [Demo Link](https://garongan.github.io/weather-app).
+You can try out Weather App by visiting [Demo Link](https://weather-app-pink-six.vercel.app/).
